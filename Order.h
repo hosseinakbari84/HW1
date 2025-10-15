@@ -22,5 +22,6 @@ class Order{
     Order(const std::vector<OrderItem>& its, Student cust);
     void cancelOrder();
     void completeOrder();
+    Order* nextOrder = nullptr;
 
 };
