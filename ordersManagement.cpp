@@ -1,13 +1,5 @@
-#include <iostream>
-#include <vector>
-#include "Order.h"
-#include "Orders.h"
-#include "Menu.h"
-#include "ItemMenu.h"
-#include "Student.h"
+#include "ordersManagement.h"
 
-
-Orders ordersList;
 void addNewOrderToList(Menu& restaurantMenu){
     std::cout << "Enter your name: ";
     std::string name;
@@ -37,4 +29,6 @@ void addNewOrderToList(Menu& restaurantMenu){
     std::cout << "Order added successfully!" << std::endl;
 }
 
-
+void ReadOrdersFromFile(std::ifstream& file){
+    
+}
