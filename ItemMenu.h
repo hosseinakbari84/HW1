@@ -4,5 +4,6 @@ class ItemMenu {
 public:
     std::string name;
     double price;
-    int count;
+
+    ItemMenu(std::string n, double p);
 };

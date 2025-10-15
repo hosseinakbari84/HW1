@@ -2,12 +2,12 @@
 
 int Order::orderID = 0;
 
-void Order::changeOrder(const std::vector<ItemMenu>& newItems) {
+void Order::changeOrder(const std::vector<OrderItem>& newItems) {
         if (status == PENDING) {
             items = newItems;
             totalPrice = 0.0;
             for (const auto& item : items) {
-                totalPrice += item.price;
+                totalPrice += item.product.price * item.count;
             }
         }
         else {
@@ -15,10 +15,10 @@ void Order::changeOrder(const std::vector<ItemMenu>& newItems) {
             return;
         }
     }
-Order::Order(const std::vector<ItemMenu>& its, Student cust) : items(its), customer(cust), status(PENDING) {
+Order::Order(const std::vector<OrderItem>& its, Student cust) : items(its), customer(cust), status(PENDING) {
         totalPrice = 0.0;
         for (const auto& item : items) {
-            totalPrice += item.price;
+            totalPrice += item.product.price * item.count;
         }
         orderID++;
     }
