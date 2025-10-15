@@ -44,7 +44,7 @@ int main()
         {
         case 0:
             std::cout << "Exiting the program." << std::endl;
-            return 0;
+            break;
         case 1:
             restaurantMenu.showMenu();
             break;
