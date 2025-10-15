@@ -1,16 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Menu.h"
-#include "ItemMenu.h"
-#include "Order.h"
-#include "Student.h"
 #include <fstream>
-#include "Orders.h"
-Orders ordersList;
-void ReadOrdersFromFile(std::ifstream& file);
-void WriteOrdersToFile(std::ofstream& file);
-void addNewOrderToList(Menu& restaurantMenu);
+#include "ordersManagement.h"
 
 int main()
 {
