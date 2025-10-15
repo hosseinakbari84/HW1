@@ -5,28 +5,26 @@
 #include "ItemMenu.h"
 #include "Order.h"
 #include "Student.h"
-// to be completed
-void addOrder(Menu& restaurantMenu)
-{
-    std::vector<OrderItem> orderItems;
-    int itemIndex, quantity;
-    std::cout << "Enter item number and quantity (0 0 to finish):" << std::endl;
-    while (true)
-    {
-        std::cin >> itemIndex >> quantity;
-        if (itemIndex == 0 && quantity == 0)
-            break;
-        if (itemIndex < 1 || itemIndex > restaurantMenu.items.size() || quantity <= 0)
-        {
-            std::cout << "Invalid input. Try again." << std::endl;
-            continue;
-        }
-        orderItems.push_back(OrderItem{restaurantMenu.items[itemIndex - 1], quantity});
-    }
-}
+#include <fstream>
+#include "Orders.h"
+Orders ordersList;
+void ReadOrdersFromFile(std::ifstream& file);
+void WriteOrdersToFile(std::ofstream& file);
+void addNewOrderToList(Menu& restaurantMenu);
 
 int main()
 {
+    std::cout << "Loading data..." << std::endl;
+    std::ifstream file("orders.txt");
+    if (file.is_open())
+    {
+        ReadOrdersFromFile(file);
+        file.close();
+    }
+    else
+    {
+        std::cout << "Could not open the file!" << std::endl;
+    }
     Menu restaurantMenu = std::vector<ItemMenu>{
         ItemMenu("Burger", 5.99),
         ItemMenu("Pizza", 8.99),
@@ -59,7 +57,7 @@ int main()
             restaurantMenu.showMenu();
             break;
         case 2:
-            addOrder(restaurantMenu);
+            addNewOrderToList(restaurantMenu);
             break;
         case 3:
             // Code to deliver an order
@@ -76,6 +74,17 @@ int main()
         default:
             std::cout << "Invalid option. Please try again." << std::endl;
         }
+    }
+    std::cout << "Saving data..." << std::endl;
+    std::ofstream outFile("orders.txt");
+    if (outFile.is_open())
+    {
+        WriteOrdersToFile(outFile);
+        outFile.close();
+    }
+    else
+    {
+        std::cout << "Could not open the file for writing!" << std::endl;
     }
     return 0;
 }
