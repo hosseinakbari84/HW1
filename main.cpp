@@ -7,6 +7,7 @@
 int main()
 {
     std::cout << "Loading data..." << std::endl;
+    ReadOrdersFromFile();
 
     Menu restaurantMenu = std::vector<ItemMenu>{
         ItemMenu("Burger", 5.99),
@@ -62,7 +63,6 @@ int main()
     }
     endofProgram:
     std::cout << "Saving data..." << std::endl;
-    
     WriteOrdersToFile();
     std::cout << "Goodbye!" << std::endl;
     return 0;
