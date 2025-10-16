@@ -7,5 +7,6 @@ void Menu::showMenu() {
             std::cout << i << ". " << item.name << ": $" << item.price << std::endl;
             i++;
         }
+        std::cout << "--------------------------" << std::endl;
     }
 Menu::Menu(const std::vector<ItemMenu>& its) : items(its) {}
