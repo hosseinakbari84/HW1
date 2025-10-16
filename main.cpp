@@ -7,16 +7,7 @@
 int main()
 {
     std::cout << "Loading data..." << std::endl;
-    std::ifstream file("orders.txt");
-    if (file.is_open())
-    {
-        ReadOrdersFromFile(file);
-        file.close();
-    }
-    else
-    {
-        std::cout << "Could not open the file!" << std::endl;
-    }
+
     Menu restaurantMenu = std::vector<ItemMenu>{
         ItemMenu("Burger", 5.99),
         ItemMenu("Pizza", 8.99),
@@ -32,7 +23,6 @@ int main()
     std::cout << "Welcome to the Restaurant!" << std::endl;
     while (1)
     {
-        std::cin >> input;
         std::cout << "1. Show Menu" << std::endl;
         std::cout << "2. New Order" << std::endl;
         std::cout << "3. Deliver Order" << std::endl;
@@ -40,15 +30,18 @@ int main()
         std::cout << "5. Change Order" << std::endl;
         std::cout << "6. Review Orders" << std::endl;
         std::cout << "0. Exit" << std::endl;
+        std::cin >> input;
         switch (input)
         {
         case 0:
             std::cout << "Exiting the program." << std::endl;
+            goto endofProgram;
             break;
         case 1:
             restaurantMenu.showMenu();
             break;
         case 2:
+            restaurantMenu.showMenu();
             addNewOrderToList(restaurantMenu);
             break;
         case 3:
@@ -61,22 +54,16 @@ int main()
             // Code to change an order
             break;
         case 6:
-            // Code to review orders
+            ordersList.displayOrders();
             break;
         default:
             std::cout << "Invalid option. Please try again." << std::endl;
         }
     }
+    endofProgram:
     std::cout << "Saving data..." << std::endl;
-    std::ofstream outFile("orders.txt");
-    if (outFile.is_open())
-    {
-        WriteOrdersToFile(outFile);
-        outFile.close();
-    }
-    else
-    {
-        std::cout << "Could not open the file for writing!" << std::endl;
-    }
+    
+    WriteOrdersToFile();
+    std::cout << "Goodbye!" << std::endl;
     return 0;
 }
