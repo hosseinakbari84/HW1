@@ -1,6 +1,6 @@
 #include "Order.h"
 
-int Order::orderID = 0;
+int Order::ordercounter = 0;
 
 void Order::changeOrder(const std::vector<OrderItem>& newItems) {
         if (status == PENDING) {
@@ -20,7 +20,13 @@ Order::Order(const std::vector<OrderItem>& its, Student cust) : items(its), cust
         for (const auto& item : items) {
             totalPrice += item.product.price * item.count;
         }
-        orderID++;
+        ordercounter++;
+        orderID = ordercounter;
+        
+    }
+Order::Order() : totalPrice(0.0), status(PENDING), orderID(0), customer("", 0) {
+        ordercounter++;
+        nextOrder = nullptr;
     }
 
 void Order::cancelOrder() {
