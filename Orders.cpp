@@ -39,7 +39,7 @@ void Orders::displayOrders()
         std::cout << "Items:\n";
         for (const auto &item : current->items)
         {
-            std::cout << "- " << item.product.name << ": $" << item.product.price << "\n";
+            std::cout << "- " << item.product.name << " (" << item.count << "): $" << item.product.price << " = $" << item.product.price * item.count << "\n";
         }
         std::cout << "Total Price: $" << current->totalPrice << "\n";
         std::cout << "Status: " << (current->status == OrderStatus::PENDING ? "Pending" : (current->status == OrderStatus::COMPLETED ? "Completed" : "Cancelled")) << "\n";
