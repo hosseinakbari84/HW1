@@ -3,10 +3,8 @@
 
 class Orders
 {
-private:
-    Order *head;
-
 public:
+Order *head;
     Orders();
     ~Orders();
     void addOrder(Order *newOrder);

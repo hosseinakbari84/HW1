@@ -11,15 +11,16 @@ struct OrderItem
 };
 
 class Order{
-    protected:
+    public:
     std::vector<OrderItem> items;
     double totalPrice;
     OrderStatus status;
-    static int orderID;
+    static int ordercounter;
+    int orderID;
     Student customer;
-    public:
     void changeOrder(const std::vector<OrderItem>& newItems);
     Order(const std::vector<OrderItem>& its, Student cust);
+    Order();
     void cancelOrder();
     void completeOrder();
     Order* nextOrder = nullptr;
