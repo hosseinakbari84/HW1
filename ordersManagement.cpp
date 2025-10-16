@@ -44,26 +44,39 @@ void ReadOrdersFromFile()
         return;
     }
 
-    Order newOrder;
-    // Read orders from the file
-
-    while (inFile >> newOrder.orderID)
+    std::string line;
+    while (std::getline(inFile, line))
     {
-        // Read order details
-        inFile >> newOrder.customer.name;
-        inFile >> newOrder.customer.studentID;
-        int statusInt;
-        inFile >> statusInt;
+        Order newOrder;
+        std::stringstream ss(line);
+        std::string part;
+        std::vector<std::string> parts;
+        while (std::getline(ss, part, ','))
+        {
+            if (!part.empty())
+            {
+                parts.push_back(part);
+            }
+        }
+        newOrder.orderID = std::stoi(parts[0]);
+        newOrder.customer.name = parts[1];
+        newOrder.customer.studentID = std::stoi(parts[2]);
+        int statusInt = std::stoi(parts[3]);
         newOrder.status = static_cast<OrderStatus>(statusInt);
-        int itemCount;
-        inFile >> itemCount;
+        int itemCount = std::stoi(parts[4]);
         for (int i = 0; i < itemCount; ++i)
         {
             OrderItem item;
-            inFile >> item.product.name;
-            inFile >> item.product.price;
-            inFile >> item.count;
+            item.product.name = parts[5 + i * 3];
+            item.product.price = std::stod(parts[5 + i * 3 + 1]);
+            item.count = std::stoi(parts[5 + i * 3 + 2]);
             newOrder.items.push_back(item);
+        }
+        parts.clear();
+        newOrder.totalPrice = 0.0;
+        for (const auto &item : newOrder.items)
+        {
+            newOrder.totalPrice += item.product.price * item.count;
         }
         ordersList.addOrder(new Order(newOrder));
     }
@@ -82,12 +95,13 @@ void WriteOrdersToFile()
     auto *current = ordersList.head;
     while (current != nullptr)
     {
-        outFile << current->orderID << " " << current->customer.getName() << " " << current->customer.getID() << " " << current->status << " " << current->items.size() << std::endl;
+        outFile << current->orderID << "," << current->customer.getName() << "," << current->customer.getID() << "," << current->status << "," << current->items.size() << ",";
         for (const auto &item : current->items)
         {
-            outFile << item.product.name << " " << item.product.price << " " << item.count << std::endl;
+            outFile << item.product.name << "," << item.product.price << "," << item.count << ",";
         }
         current = current->nextOrder;
+        outFile << std::endl;
     }
     outFile.close();
     std::cout << "Data saved." << std::endl;
