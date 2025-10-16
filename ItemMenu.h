@@ -6,4 +6,5 @@ public:
     double price;
 
     ItemMenu(std::string n, double p);
+    ItemMenu();
 };
