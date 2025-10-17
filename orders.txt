@@ -1,5 +1,5 @@
 1,hossein,40318963,0,6,Burger,5.99,1,Pizza,8.99,2,Salad,4.99,3,Soda,1.99,4,Fries,2.99,9,Steak,14.99,10,
 2,maryam,33384493,0,2,Ice Cream,3.49,10,Tea,1.49,2,
-3,asghar,30498613,0,3,Burger,5.99,1,Salad,4.99,5,Ice Cream,3.49,8,
-4,amir,40238963,0,2,Tea,1.49,10,Chicken Wings,6.99,4,
-5,khaste,30489635,0,1,Burger,5.99,1,
+3,asghar,30498613,2,3,Burger,5.99,1,Salad,4.99,5,Ice Cream,3.49,8,
+4,amir,40238963,1,2,Tea,1.49,10,Chicken Wings,6.99,4,
+5,khaste,30489635,0,2,Tea,1.49,10,Fries,2.99,1,
