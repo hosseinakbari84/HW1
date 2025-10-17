@@ -17,12 +17,13 @@ class Order{
     OrderStatus status;
     static int ordercounter;
     int orderID;
-    Student customer;
+    Student* orderer;
     void changeOrder(const std::vector<OrderItem>& newItems);
-    Order(const std::vector<OrderItem>& its, Student cust);
+    Order(const std::vector<OrderItem>& its, Student *cust);
     Order();
     void cancelOrder();
     void completeOrder();
+    void printOrder() const;
     Order* nextOrder = nullptr;
 
 };

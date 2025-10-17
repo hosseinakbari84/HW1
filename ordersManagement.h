@@ -7,8 +7,10 @@
 #include "Menu.h"
 #include "ItemMenu.h"
 #include "Student.h"
+#include "Students.h"
 #include <sstream>
 inline Orders ordersList;
+inline Students studentsList;
 void ReadOrdersFromFile();
 void WriteOrdersToFile();
 void addNewOrderToList(Menu& restaurantMenu);

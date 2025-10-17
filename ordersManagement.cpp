@@ -1,18 +1,39 @@
 #include "ordersManagement.h"
 void addNewOrderToList(Menu &restaurantMenu)
 {
-    std::cout << "Enter your name: ";
-    std::string name;
-    std::cin >> name;
-    std::cout << "Enter your student ID: ";
+    Student* newCustomer = nullptr;
+    std::cout << "Enter your student ID: (0 to go back) ";
     int studentID;
     std::cin >> studentID;
+    if (studentID == 0)
+        return;
     if (studentID < 10000000 || studentID > 99999999)
     {
         std::cout << "Invalid student ID. Order not created." << std::endl;
         return;
     }
-    Student customer(name, studentID);
+    std::cout << "Enter your name: ";
+    std::string name;
+    std::cin >> name;
+    if(name.empty())
+    {
+        std::cout << "Name cannot be empty. Order not created." << std::endl;
+        return;
+    }
+     if (studentsList.findStudentByID(studentID) != nullptr && studentsList.findStudentByID(studentID)->getName() != name)
+    {
+        std::cout << "Name does not match the student ID. Order not created." << std::endl;
+        return;
+    }
+    if (studentsList.findStudentByID(studentID) != nullptr)
+    {
+        newCustomer = studentsList.findStudentByID(studentID);
+    }
+    else
+    {
+        newCustomer = new Student(name, studentID);
+        studentsList.addStudent(newCustomer);
+    }
     auto *orderItems = new std::vector<OrderItem>;
     int itemIndex, quantity;
     while (true)
@@ -28,8 +49,9 @@ void addNewOrderToList(Menu &restaurantMenu)
         }
         orderItems->push_back(OrderItem{restaurantMenu.items[itemIndex - 1], quantity});
     }
-    auto *newOrder = new Order(*orderItems, customer);
+    auto *newOrder = new Order(*orderItems, newCustomer);
     delete orderItems;
+    newOrder->orderer->ordersID.push_back(newOrder->orderID);
     ordersList.addOrder(newOrder);
     std::cout << "Order added successfully!" << std::endl;
 }
@@ -58,8 +80,19 @@ void ReadOrdersFromFile()
             }
         }
         newOrder.orderID = std::stoi(parts[0]);
-        newOrder.customer.name = parts[1];
-        newOrder.customer.studentID = std::stoi(parts[2]);
+
+        if (studentsList.findStudentByID(std::stoi(parts[2])) != nullptr)
+        {
+            newOrder.orderer = studentsList.findStudentByID(std::stoi(parts[2]));
+        }
+        else
+        {
+            Student* newStudent = new Student(parts[1], std::stoi(parts[2]));
+            studentsList.addStudent(newStudent);
+            newOrder.orderer = newStudent;
+        }
+        newOrder.orderer->ordersID.push_back(newOrder.orderID);
+
         int statusInt = std::stoi(parts[3]);
         newOrder.status = static_cast<OrderStatus>(statusInt);
         int itemCount = std::stoi(parts[4]);
@@ -94,7 +127,7 @@ void WriteOrdersToFile()
     auto *current = ordersList.head;
     while (current != nullptr)
     {
-        outFile << current->orderID << "," << current->customer.getName() << "," << current->customer.getID() << "," << current->status << "," << current->items.size() << ",";
+        outFile << current->orderID << "," << current->orderer->getName() << "," << current->orderer->getID() << "," << current->status << "," << current->items.size() << ",";
         for (const auto &item : current->items)
         {
             outFile << item.product.name << "," << item.product.price << "," << item.count << ",";
@@ -109,6 +142,8 @@ void WriteOrdersToFile()
 
 void deliverOrder(int orderID)
 {
+    if(orderID == 0)
+        return;
     Order *current = ordersList.head;
     while (current)
     {
@@ -125,13 +160,14 @@ void deliverOrder(int orderID)
 
 void cancelOrder(int orderID)
 {
+    if(orderID == 0)
+        return;
     Order *current = ordersList.head;
     while (current)
     {
         if (current->orderID == orderID)
         {
             current->cancelOrder();
-            std::cout << "Order " << orderID << " has been canceled." << std::endl;
             return;
         }
         current = current->nextOrder;
