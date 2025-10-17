@@ -41,7 +41,13 @@ void Orders::displayOrders()
             std::cout << "- " << item.product.name << " (" << item.count << "): $" << item.product.price << " = $" << item.product.price * item.count << "\n";
         }
         std::cout << "Total Price: $" << current->totalPrice << "\n";
-        std::cout << "Status: " << (current->status == OrderStatus::PENDING ? "Pending" : (current->status == OrderStatus::COMPLETED ? "Completed" : "Cancelled")) << "\n";
+        std::cout << "Status: ";
+        if (current->status == PENDING)
+            std::cout << "PENDING\n";
+        else if (current->status == COMPLETED)
+            std::cout << "\033[32m" << "COMPLETED" << "\033[0m\n";
+        else if (current->status == CANCELLED)
+            std::cout << "\033[31m" << "CANCELLED" << "\033[0m\n"; 
         std::cout << "--------------------------\n";
         current = current->nextOrder;
     }

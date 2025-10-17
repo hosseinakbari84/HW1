@@ -21,16 +21,16 @@ int main()
         ItemMenu("Chicken Wings", 6.99),
         ItemMenu("Steak", 14.99)};
     int input;
-    std::cout << "Welcome to the Restaurant!" << std::endl;
+    std::cout << "\033[36m" << "Welcome to the Restaurant!" << "\033[0m" << std::endl;
     while (1)
     {
-        std::cout << "1. Show Menu" << std::endl;
-        std::cout << "2. New Order" << std::endl;
-        std::cout << "3. Deliver Order" << std::endl;
-        std::cout << "4. Cancel Order" << std::endl;
-        std::cout << "5. Change Order" << std::endl;
-        std::cout << "6. Review Orders" << std::endl;
-        std::cout << "0. Exit" << std::endl;
+        std::cout << "\033[36m" << "1. Show Menu" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "2. New Order" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "3. Deliver Order" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "4. Cancel Order" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "5. Change Order" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "6. Review Orders" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "0. Exit" << "\033[0m" << std::endl;
         std::cin >> input;
         switch (input)
         {

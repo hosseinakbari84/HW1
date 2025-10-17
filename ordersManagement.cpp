@@ -140,6 +140,7 @@ void cancelOrder(int orderID)
 }
 std::vector<OrderItem>& getNewItemsFromUser(Menu &restaurantMenu)
 {
+    restaurantMenu.showMenu();
     auto *newItems = new std::vector<OrderItem>;
     int itemIndex, quantity;
     while (true)
