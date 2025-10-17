@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include "ordersManagement.h"
+#include "SearchSTD.h"
 
 int main()
 {
@@ -21,7 +22,7 @@ int main()
         ItemMenu("Chicken Wings", 6.99),
         ItemMenu("Steak", 14.99)};
     int input;
-    std::cout << "\033[36m" << "Welcome to the Restaurant!" << "\033[0m" << std::endl;
+    std::cout << "\033[33m" << "Welcome to the Restaurant!" << "\033[0m" << std::endl;
     while (1)
     {
         std::cout << "\033[36m" << "1. Show Menu" << "\033[0m" << std::endl;
@@ -30,6 +31,9 @@ int main()
         std::cout << "\033[36m" << "4. Cancel Order" << "\033[0m" << std::endl;
         std::cout << "\033[36m" << "5. Change Order" << "\033[0m" << std::endl;
         std::cout << "\033[36m" << "6. Review Orders" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "7. Find Order With STD ID" << "\033[0m" << std::endl;
+        std::cout << "\033[36m" << "8. Find Order With Student Name" << "\033[0m" << std::endl;
+
         std::cout << "\033[36m" << "0. Exit" << "\033[0m" << std::endl;
         std::cin >> input;
         switch (input)
@@ -46,13 +50,15 @@ int main()
             addNewOrderToList(restaurantMenu);
             break;
         case 3:
-            std::cout << "Enter Order ID to deliver: ";
+            ordersList.displayOrders();
+            std::cout << "Enter Order ID to deliver: (0 to go back) ";
             int orderID;
             std::cin >> orderID;
             deliverOrder(orderID);
             break;
         case 4:
-            std::cout << "Enter Order ID to cancel: ";
+            ordersList.displayOrders();
+            std::cout << "Enter Order ID to cancel: (0 to go back) ";
             std::cin >> orderID;
             cancelOrder(orderID);
             break;
@@ -61,6 +67,12 @@ int main()
             break;
         case 6:
             ordersList.displayOrders();
+            break;
+        case 7:
+            getStudentIdAndPrintOrders();
+            break;
+        case 8:
+            getStudentNameAndPrintOrders();
             break;
         default:
             std::cout << "Invalid option. Please try again." << std::endl;
