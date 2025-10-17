@@ -33,8 +33,8 @@ void Orders::displayOrders()
     while (current)
     {
         std::cout << "Order ID: " << current->orderID << "\n";
-        std::cout << "Student: " << current->customer.getName() << "\n";
-        std::cout << "Student ID: " << current->customer.getID() << "\n";
+        std::cout << "Student: " << current->orderer->getName() << "\n";
+        std::cout << "Student ID: " << current->orderer->getID() << "\n";
         std::cout << "Items:\n";
         for (const auto &item : current->items)
         {
@@ -51,4 +51,18 @@ void Orders::displayOrders()
         std::cout << "--------------------------\n";
         current = current->nextOrder;
     }
+}
+
+Order* Orders::findOrderByID(int orderID)
+{
+    Order *current = head;
+    while (current)
+    {
+        if (current->orderID == orderID)
+        {
+            return current;
+        }
+        current = current->nextOrder;
+    }
+    return nullptr;
 }

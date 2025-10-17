@@ -8,5 +8,6 @@ Order *head;
     Orders();
     ~Orders();
     void addOrder(Order *newOrder);
+    Order *findOrderByID(int orderID);
     void displayOrders();
 };
