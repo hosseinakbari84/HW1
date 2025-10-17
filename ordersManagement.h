@@ -12,3 +12,8 @@ inline Orders ordersList;
 void ReadOrdersFromFile();
 void WriteOrdersToFile();
 void addNewOrderToList(Menu& restaurantMenu);
+void deliverOrder(int orderID);
+void cancelOrder(int orderID);
+void changeOrder(int orderID, const std::vector<OrderItem>& newItems);
+std::vector<OrderItem>& getNewItemsFromUser(Menu &restaurantMenu);
+void changeTheOrder(Menu &restaurantMenu);
