@@ -1,5 +1,4 @@
 #include "Orders.h"
-
 void Orders::addOrder(Order *newOrder)
 {
     if (!head)
