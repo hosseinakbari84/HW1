@@ -1,5 +1,6 @@
 #include "Student.h"
 #include <iostream>
+#include "ordersManagement.h"
 
 Student::Student(std::string n, int id) : name(n), studentID(id) {}
 std::string Student::getName() const {
@@ -17,4 +18,12 @@ void Student::setID(int id) {
         return;
     }
     studentID = id;
+}
+void Student::printStudentOrders() const {
+    std::cout << "Student Name: " << name << ", ID: " << studentID << std::endl;
+    std::cout << "Orders : ";
+    for (const auto& orderID : ordersID) {
+        ordersList.findOrderByID(orderID)->printOrder();
+    }
+
 }
