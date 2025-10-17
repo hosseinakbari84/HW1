@@ -1,5 +1,4 @@
 #include "ordersManagement.h"
-
 void addNewOrderToList(Menu &restaurantMenu)
 {
     std::cout << "Enter your name: ";
@@ -29,7 +28,7 @@ void addNewOrderToList(Menu &restaurantMenu)
         }
         orderItems->push_back(OrderItem{restaurantMenu.items[itemIndex - 1], quantity});
     }
-    auto newOrder = new Order(*orderItems, customer);
+    auto *newOrder = new Order(*orderItems, customer);
     delete orderItems;
     ordersList.addOrder(newOrder);
     std::cout << "Order added successfully!" << std::endl;
@@ -105,4 +104,81 @@ void WriteOrdersToFile()
     }
     outFile.close();
     std::cout << "Data saved." << std::endl;
+}
+
+
+void deliverOrder(int orderID)
+{
+    Order *current = ordersList.head;
+    while (current)
+    {
+        if (current->orderID == orderID)
+        {
+            current->completeOrder();
+            std::cout << "Order " << orderID << " marked as completed." << std::endl;
+            return;
+        }
+        current = current->nextOrder;
+    }
+    std::cout << "Order ID " << orderID << " not found." << std::endl;
+}
+
+void cancelOrder(int orderID)
+{
+    Order *current = ordersList.head;
+    while (current)
+    {
+        if (current->orderID == orderID)
+        {
+            current->cancelOrder();
+            std::cout << "Order " << orderID << " has been canceled." << std::endl;
+            return;
+        }
+        current = current->nextOrder;
+    }
+    std::cout << "Order ID " << orderID << " not found." << std::endl;
+}
+std::vector<OrderItem>& getNewItemsFromUser(Menu &restaurantMenu)
+{
+    auto *newItems = new std::vector<OrderItem>;
+    int itemIndex, quantity;
+    while (true)
+    {
+        std::cout << "Enter item number and quantity for the new order (0 0 to finish):" << std::endl;
+        std::cin >> itemIndex >> quantity;
+        if (itemIndex == 0 && quantity == 0)
+            break;
+        if (itemIndex < 1 || itemIndex > restaurantMenu.items.size() || quantity <= 0)
+        {
+            std::cout << "Invalid input. Try again." << std::endl;
+            continue;
+        }
+        newItems->push_back(OrderItem{restaurantMenu.items[itemIndex - 1], quantity});
+    }
+    return *newItems;
+}
+
+void changeOrder(int orderID, const std::vector<OrderItem>& newItems)
+{
+    Order *current = ordersList.head;
+    while (current)
+    {
+        if (current->orderID == orderID)
+        {
+            current->items = newItems;
+            std::cout << "Order " << orderID << " has been updated." << std::endl;
+            return;
+        }
+        current = current->nextOrder;
+    }
+    std::cout << "Order ID " << orderID << " not found." << std::endl;
+}
+
+void changeTheOrder(Menu &restaurantMenu)
+{
+    std::cout << "Enter Order ID to change: ";
+    int orderID;
+    std::cin >> orderID;
+    auto newItems = getNewItemsFromUser(restaurantMenu);
+    changeOrder(orderID, newItems);
 }
