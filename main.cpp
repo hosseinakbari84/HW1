@@ -46,13 +46,18 @@ int main()
             addNewOrderToList(restaurantMenu);
             break;
         case 3:
-            // Code to deliver an order
+            std::cout << "Enter Order ID to deliver: ";
+            int orderID;
+            std::cin >> orderID;
+            deliverOrder(orderID);
             break;
         case 4:
-            // Code to cancel an order
+            std::cout << "Enter Order ID to cancel: ";
+            std::cin >> orderID;
+            cancelOrder(orderID);
             break;
         case 5:
-            // Code to change an order
+            changeTheOrder(restaurantMenu);
             break;
         case 6:
             ordersList.displayOrders();
