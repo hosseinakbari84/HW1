@@ -42,7 +42,7 @@ void addNewOrderToList(Menu &restaurantMenu)
         std::cin >> itemIndex >> quantity;
         if (itemIndex == 0 && quantity == 0)
             break;
-        if (itemIndex < 1 || itemIndex > restaurantMenu.items.size() || quantity <= 0)
+        if (itemIndex < 1 || itemIndex > restaurantMenu.items.size() || quantity <= 0 || quantity > 1000)
         {
             std::cout << "Invalid input. Try again." << std::endl;
             continue;
